@@ -160,6 +160,7 @@ def generate_test_data():
     order1 = Order.objects.create(
         restaurant=restaurants[0],
         customer_name="John Smith",
+        table_number="A1",
         status="in_progress",
         notes="Extra cheese on the pizza, please"
     )
@@ -187,6 +188,7 @@ def generate_test_data():
     order2 = Order.objects.create(
         restaurant=restaurants[1],
         customer_name="Jane Doe",
+        table_number="B3",
         status="pending",
         notes="No onions on the burger"
     )
@@ -214,6 +216,7 @@ def generate_test_data():
     order3 = Order.objects.create(
         restaurant=restaurants[2],
         customer_name="Mike Johnson",
+        table_number="C2",
         status="done"
     )
     
@@ -239,6 +242,7 @@ def generate_test_data():
     order4 = Order.objects.create(
         restaurant=restaurants[3],
         customer_name="Sarah Wilson",
+        table_number="A4",
         status="pending",
         notes="Make it spicy!"
     )
@@ -260,6 +264,7 @@ def generate_test_data():
     order5 = Order.objects.create(
         restaurant=restaurants[4],
         customer_name="David Chen",
+        table_number="B1",
         status="cancelled",
         notes="Customer changed mind"
     )
@@ -280,6 +285,7 @@ def generate_test_data():
     order6 = Order.objects.create(
         restaurant=restaurants[0],
         customer_name="Office Party",
+        table_number="C5",
         status="in_progress",
         notes="Corporate order - delivery to Suite 300"
     )

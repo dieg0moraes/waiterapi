@@ -63,7 +63,7 @@ class OrderCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Order
-        fields = ['restaurant', 'customer_name', 'notes', 'order_items']
+        fields = ['restaurant', 'customer_name', 'table_number', 'notes', 'order_items']
 
     def create(self, validated_data):
         """Create order with associated order items"""
@@ -94,7 +94,7 @@ class OrderSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Order
-        fields = ['id', 'restaurant', 'restaurant_name', 'customer_name', 'status', 
+        fields = ['id', 'restaurant', 'restaurant_name', 'customer_name', 'table_number', 'status', 
                  'status_display', 'total_amount', 'notes', 'order_items', 
                  'created_at', 'updated_at']
         read_only_fields = ['total_amount', 'created_at', 'updated_at']

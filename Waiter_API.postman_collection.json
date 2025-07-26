@@ -462,7 +462,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"restaurant\": {{restaurant_id}},\n  \"customer_name\": \"Alice Brown\",\n  \"notes\": \"Table 5, please hurry\",\n  \"order_items\": [\n    {\n      \"menu_item\": {{menu_item_id}},\n      \"quantity\": 2,\n      \"special_instructions\": \"Extra cheese, no olives\"\n    },\n    {\n      \"menu_item\": 2,\n      \"quantity\": 1,\n      \"special_instructions\": \"Well done\"\n    }\n  ]\n}"
+							"raw": "{\n  \"restaurant\": {{restaurant_id}},\n  \"customer_name\": \"Alice Brown\",\n  \"table_number\": \"A5\",\n  \"notes\": \"Please hurry\",\n  \"order_items\": [\n    {\n      \"menu_item\": {{menu_item_id}},\n      \"quantity\": 2,\n      \"special_instructions\": \"Extra cheese, no olives\"\n    },\n    {\n      \"menu_item\": 2,\n      \"quantity\": 1,\n      \"special_instructions\": \"Well done\"\n    }\n  ]\n}"
 						},
 						"url": {
 							"raw": "{{base_url}}/api/orders/",
@@ -744,7 +744,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"restaurant\": 1,\n  \"customer_name\": \"Test Customer\",\n  \"notes\": \"Test order from Postman\",\n  \"order_items\": [\n    {\n      \"menu_item\": 1,\n      \"quantity\": 1,\n      \"special_instructions\": \"Extra basil\"\n    },\n    {\n      \"menu_item\": 3,\n      \"quantity\": 1\n    }\n  ]\n}"
+							"raw": "{\n  \"restaurant\": 1,\n  \"customer_name\": \"Test Customer\",\n  \"table_number\": \"B2\",\n  \"notes\": \"Test order from Postman\",\n  \"order_items\": [\n    {\n      \"menu_item\": 1,\n      \"quantity\": 1,\n      \"special_instructions\": \"Extra basil\"\n    },\n    {\n      \"menu_item\": 3,\n      \"quantity\": 1\n    }\n  ]\n}"
 						},
 						"url": {
 							"raw": "{{base_url}}/api/orders/",

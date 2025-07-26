@@ -48,6 +48,7 @@ class Order(models.Model):
 
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, related_name='orders')
     customer_name = models.CharField(max_length=100)
+    table_number = models.CharField(max_length=10, blank=True, null=True, help_text="Table number for the order")
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
     total_amount = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
     notes = models.TextField(blank=True)

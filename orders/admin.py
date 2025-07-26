@@ -27,7 +27,7 @@ class OrderItemInline(admin.TabularInline):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ['id', 'customer_name', 'restaurant', 'status', 'total_amount', 'created_at']
+    list_display = ['id', 'customer_name', 'table_number', 'restaurant', 'status', 'total_amount', 'created_at']
     list_filter = ['status', 'restaurant', 'created_at']
     search_fields = ['customer_name', 'restaurant__name']
     readonly_fields = ['total_amount', 'created_at', 'updated_at']
