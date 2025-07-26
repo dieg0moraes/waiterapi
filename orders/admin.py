@@ -4,7 +4,7 @@ from .models import Restaurant, MenuItem, Order, OrderItem
 
 @admin.register(Restaurant)
 class RestaurantAdmin(admin.ModelAdmin):
-    list_display = ['name', 'is_active', 'created_at']
+    list_display = ['id', 'name', 'is_active', 'created_at']
     list_filter = ['is_active', 'created_at']
     search_fields = ['name', 'description']
     readonly_fields = ['created_at', 'updated_at']
