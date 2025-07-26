@@ -1,132 +1,57 @@
 #!/usr/bin/env python
 import os
 import sys
-import django
+import subprocess
 
-# Setup Django
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'waiterapi.settings')
-django.setup()
+# Import the load_test_data script
+from load_test_data import main as load_main
 
-from django.contrib.auth.models import User
-from orders.models import Restaurant, MenuItem, Order, OrderItem
-from decimal import Decimal
-
-def setup_admin_user():
-    """Create admin user if it doesn't exist"""
-    if not User.objects.filter(username='admin').exists():
-        print("Creating admin user...")
-        User.objects.create_superuser(
-            username='admin',
-            email='admin@example.com',
-            password='admin123'
-        )
-        print("Admin user created! Username: admin, Password: admin123")
-    else:
-        print("Admin user already exists")
-
-def create_sample_data():
-    """Create sample data if none exists"""
-    if Restaurant.objects.count() > 0:
-        print("Sample data already exists")
-        return
+def setup_admin_and_data():
+    """Setup admin user and load comprehensive test data"""
+    print("🚀 Setting up admin user and loading test data...")
+    
+    # Import Django to check if data exists
+    import django
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'waiterapi.settings')
+    django.setup()
+    
+    from orders.models import Restaurant
+    
+    # Check if data already exists
+    data_exists = Restaurant.objects.exists()
+    
+    
+    # Check if dump file exists, if not generate it
+    if not os.path.exists('test_data_dump.json'):
+        print("📦 Test data dump not found, generating...")
+        try:
+            result = subprocess.run([sys.executable, 'generate_test_data.py'], 
+                                  capture_output=True, text=True)
+            if result.returncode != 0:
+                print(f"❌ Error generating test data: {result.stderr}")
+                return False
+            print("✅ Test data generated successfully")
+        except Exception as e:
+            print(f"❌ Error running generate_test_data.py: {e}")
+            return False
+    
+    # Load the test data using the load_test_data script
+    try:
+        # Don't pass any flags - will clear existing and load fresh
+        original_argv = sys.argv.copy()
+        sys.argv = ['load_test_data.py']
         
-    print("Creating sample data...")
-    
-    # Create restaurants
-    pizza_place = Restaurant.objects.create(
-        name="Mario's Pizza",
-        description="Authentic Italian pizza and pasta"
-    )
-    
-    burger_joint = Restaurant.objects.create(
-        name="Burger Palace",
-        description="Gourmet burgers and fries"
-    )
-    
-    sushi_bar = Restaurant.objects.create(
-        name="Sakura Sushi",
-        description="Fresh sushi and Japanese cuisine"
-    )
-    
-    # Create menu items for Pizza Place
-    MenuItem.objects.create(
-        restaurant=pizza_place,
-        name="Margherita Pizza",
-        description="Fresh tomato sauce, mozzarella, and basil",
-        price=Decimal('15.99'),
-        category="Pizza"
-    )
-    
-    MenuItem.objects.create(
-        restaurant=pizza_place,
-        name="Pepperoni Pizza",
-        description="Classic pepperoni with mozzarella cheese",
-        price=Decimal('17.99'),
-        category="Pizza"
-    )
-    
-    MenuItem.objects.create(
-        restaurant=pizza_place,
-        name="Caesar Salad",
-        description="Crisp romaine lettuce with caesar dressing",
-        price=Decimal('9.99'),
-        category="Salad"
-    )
-    
-    # Create menu items for Burger Joint
-    MenuItem.objects.create(
-        restaurant=burger_joint,
-        name="Classic Cheeseburger",
-        description="Beef patty with cheese, lettuce, tomato",
-        price=Decimal('12.99'),
-        category="Burger"
-    )
-    
-    MenuItem.objects.create(
-        restaurant=burger_joint,
-        name="French Fries",
-        description="Crispy golden fries",
-        price=Decimal('5.99'),
-        category="Side"
-    )
-    
-    MenuItem.objects.create(
-        restaurant=burger_joint,
-        name="Chocolate Shake",
-        description="Rich chocolate milkshake",
-        price=Decimal('6.99'),
-        category="Drink"
-    )
-    
-    # Create menu items for Sushi Bar
-    MenuItem.objects.create(
-        restaurant=sushi_bar,
-        name="Salmon Roll",
-        description="Fresh salmon with rice and nori",
-        price=Decimal('8.99'),
-        category="Sushi"
-    )
-    
-    MenuItem.objects.create(
-        restaurant=sushi_bar,
-        name="California Roll",
-        description="Crab, avocado, and cucumber",
-        price=Decimal('7.99'),
-        category="Sushi"
-    )
-    
-    MenuItem.objects.create(
-        restaurant=sushi_bar,
-        name="Miso Soup",
-        description="Traditional Japanese soup",
-        price=Decimal('3.99'),
-        category="Soup"
-    )
-    
-    print(f"Created {Restaurant.objects.count()} restaurants")
-    print(f"Created {MenuItem.objects.count()} menu items")
-    print("Sample data created successfully!")
+        result = load_main()
+        
+        # Restore original argv
+        sys.argv = original_argv
+        
+        return result == 0
+    except Exception as e:
+        print(f"❌ Error loading test data: {e}")
+        return False
 
 if __name__ == "__main__":
-    setup_admin_user()
-    create_sample_data() 
+    success = setup_admin_and_data()
+    if not success:
+        sys.exit(1) 

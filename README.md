@@ -133,12 +133,20 @@ pending → in_progress → done
 cancelled   cancelled
 ```
 
-## Sample Data
+## Test Data
 
-The system includes sample data with:
-- 3 restaurants (Mario's Pizza, Burger Palace, Sakura Sushi)
-- 9 menu items across different categories
-- Sample orders in various statuses
+The system includes a comprehensive test data management system:
+- **6 restaurants** (5 active, 1 inactive) across different cuisines
+- **38 menu items** with proper categorization and pricing
+- **6 sample orders** in various statuses (pending, in_progress, done, cancelled)
+- **16 order items** with realistic quantities and special instructions
+
+### Test Data Scripts
+- `python generate_test_data.py` - Generate and export test data
+- `python load_test_data.py` - Load test data from JSON dump
+- `python setup_admin.py` - Automated setup for Docker
+
+See [TEST_DATA.md](TEST_DATA.md) for detailed documentation.
 
 ## Docker Commands
 
